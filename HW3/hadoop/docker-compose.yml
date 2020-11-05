@@ -1,0 +1,67 @@
+  # Container that runs HDFS NameNode and DataNode services
+version: '2'
+
+services:
+  hdfs-namenode:
+    image: hdfs-namenode
+    hostname: hdfs-namenode
+    container_name: hdfs-namenode
+    build:
+      context: .
+      dockerfile: hdfs-namenode/Dockerfile
+    
+    #extra_hosts:
+    # spark-master: 172.20.0.4
+    #  hive-metastore: 172.20.0.5 
+    
+    environment:
+      - HIVEMETASTORE=hive-metastore
+      - VOLUME_DIR=/usr/local/hadoop/tmp/dfs
+#    mem_limit: 7680m
+    ports:
+    # HDFS port
+      - "9000:9000"
+    # HDFS NameNode WebUI
+      - "50070:50070"
+    #yarn webUI
+      - "8088:8088"
+      - "8030:8030"
+      - "8031:8031"
+      - "8032:8032"
+    #jobhistory server webUI
+      - "19888:19888"
+    volumes:
+#      - ./volumes/hdfs-namenode:/usr/local/hadoop/tmp/dfs
+      - ./mapreduce/:/opt/mapreduce
+    networks:
+      testing_net:
+        aliases:
+          - hdfs-namenode
+        ipv4_address: 172.20.0.6
+  # Container that runs HDFS DataNode service
+  hdfs-datanode-1:
+    container_name: hdfs-datanode-1
+    hostname: hdfs-datanode-1
+    image: hdfs-datanode
+    build:
+      context: .
+      dockerfile: hdfs-datanode/Dockerfile
+    environment:
+      - NAMENODE_HOSTNAME=hdfs-namenode
+    cpu_shares: 2000
+#    mem_limit: 7680m
+    ports:
+      - "8043:8042"
+#    volumes:
+#      - ./volumes/hdfs-datanode-1:/usr/local/hadoop/tmp/dfs/data
+    depends_on:
+      - hdfs-namenode
+    networks:
+      testing_net:
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1

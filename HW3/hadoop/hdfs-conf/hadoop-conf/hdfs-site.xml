@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>dfs.permissions</name>
+		<value>false</value>
+	</property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>hdfs-namenode:50090</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:/usr/local/hadoop/tmp/dfs/name</value>
+    </property>
+    <property>
+        <name>dfs.namenode.checkpoint.dir</name>
+        <value>file:/usr/local/hadoop/tmp/dfs/namesecondary</value>
+    </property>
+	<property>   
+		<name>dfs.datanode.max.transfer.threads</name>   
+		<value>8192</value>    
+	</property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:/usr/local/hadoop/tmp/dfs/data</value>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>3</value>
+    </property>
+
+    <property>
+        <name>dfs.client.use.datanode.hostname</name>
+        <value>true</value>
+        <description>Whether clients should use datanode hostnames when
+    connecting to datanodes.
+        </description>
+    </property>
+
+    <property>
+    <name>dfs.datanode.use.datanode.hostname</name>
+    <value>true</value>
+    <description>Whether datanodes should use datanode hostnames when
+        connecting to other datanodes for data transfer.
+    </description>
+    </property>
+
+</configuration>
