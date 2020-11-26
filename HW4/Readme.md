@@ -12,4 +12,4 @@ Later, to use spark cluster, try to type:
 
 	bin/spark-submit  --deploy-mode client  yourPath/logistic_regression.py yourPath/data_banknote_authentication.txt 50
 
-where 50 means the number of iterations. An you will see the iteration process in the spark cluster.
+where 50 means the number of iterations. And you will see the iteration process in the spark cluster.
